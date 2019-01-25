@@ -4,8 +4,12 @@ import flixel.FlxState;
 
 class PlayState extends FlxState
 {
+
+	var World:World;
+
 	override public function create():Void
 	{
+		World = new World();
 		super.create();
 	}
 
