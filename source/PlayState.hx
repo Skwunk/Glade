@@ -17,9 +17,9 @@ class PlayState extends FlxState
 	override public function create():Void
 	{
 		World = new World();
-		add(World.getTileLayers());
+		add(World);
 
-		Player = new Player(5, 5);
+		Player = new Player(1, 1);
 		add(Player);
 		FlxG.camera.follow(Player, TOPDOWN, 1);
 
