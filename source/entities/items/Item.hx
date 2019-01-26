@@ -1,9 +1,12 @@
 package entities.items;
 
+import flixel.tweens.FlxTween;
+import flixel.tweens.FlxEase;
+
 class Item extends StaticEntity
 {
 
-    public function new(x:Int y:Int)
+    public function new(?x:Int=0, ?y:Int=0)
     {
         super(x,y);
     }
@@ -11,10 +14,10 @@ class Item extends StaticEntity
     override public function kill():Void
     {
         alive = false;
-        FlxTween.tween(this, {alpha: 0, y: y-16}, .33, {ease:FlxEase.circOut, onComplete: finishKill});
+        FlxTween.tween(this, {alpha: 0, y: y-16}, .33, {ease :FlxEase.circOut, onComplete: finishKill});
     }
 
-    funciton finishKill():Void
+    function finishKill(_):Void
     {
         exists = false;
     }

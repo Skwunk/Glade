@@ -1,15 +1,18 @@
 package entities;
 
 import flixel.FlxG;
+import flixel.group.FlxGroup;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
+import entities.items.Item;
 
 class Player extends DynamicEntity
 {
     
     var walking = false;
+    var GrpInventory:FlxTypedGroup<Item>;
     
-    public function new(x:Int y:Int)
+    public function new(?x:Int=0, ?y:Int=0)
     {
         super(x,y);
     }

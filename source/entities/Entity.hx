@@ -2,13 +2,14 @@ package entities;
 
 import flixel.FlxSprite;
 
-typedef Point = { x : Int, y : Int };
+typedef Point = { x : Int, y : Int};
 
 class Entity extends FlxSprite
 {
     public var worldx:Int;
     public var worldy:Int;
-    public function new(x:Int, y:Int){
+    
+    public function new(?x:Int=0, ?y:Int=0){
         worldx = x;
         worldy = y;
         super(x,y);

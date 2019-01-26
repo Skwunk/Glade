@@ -3,9 +3,9 @@ package entities;
 class StaticEntity extends Entity
 {
 
-    public function new(?X:Float=0, ?Y:Float=0)
+    public function new(?x:Int=0, ?y:Int=0)
     {
-        super(X, Y);
+        super(x, y);
     }
 
     override public function update(elapsed:Float):Void

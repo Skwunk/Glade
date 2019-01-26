@@ -18,7 +18,7 @@ class PlayState extends FlxState
 	{
 		//World = new World();
 
-		Player = new Player(5,5);
+		Player = new Player(5, 5);
 		add(Player);
 
 		GrpItems = new FlxTypedGroup();
@@ -32,4 +32,24 @@ class PlayState extends FlxState
 	{
 		super.update(elapsed);
 	}
+
+	function placeEntity(entityName:String, entityData:Xml):Void
+	{
+		var x:Int = Std.parseInt(entityData.get("x"));
+		var y:Int = Std.parseInt(entityData.get("y"));
+		if(entityName == "player")
+		{
+			Player.x = x;
+			Player.y = y;
+		}
+	}
+
+	function playerTouchItem(P:Player, I:Item):Void
+	{
+		if(P.alive && P.exists && I.alive && I.exists)
+		{
+			I.kill();
+		}
+	}
+
 }
