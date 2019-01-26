@@ -10,7 +10,7 @@ class MainMenuState extends MenuMasterState
     {
         var newGameBttn = new FlxButton(10, 10, "New Game", startNewGame);
         add(newGameBttn);
-        var loadGameBttn = new FlxButton(10, newGameBttn.height + 20, "Load Game", startNewGame);
+        var loadGameBttn = new FlxButton(10, newGameBttn.height + 20, "Load Game", loadGame);
         add(loadGameBttn);
         var optionsBttn = new FlxButton(10, newGameBttn.height + loadGameBttn.height + 30, "Load Game", startNewGame);
         add(optionsBttn);
@@ -28,7 +28,7 @@ class MainMenuState extends MenuMasterState
     }
     private function loadGame():Void
     {
-        //FlxG.switchState(new LoadGameState());
+        FlxG.switchState(new PlayState());
     }
     private function openOptions():Void
     {
