@@ -6,7 +6,14 @@ import flixel.tweens.FlxEase;
 
 class Player extends DynamicEntity
 {
+    
     var walking = false;
+    
+    public function new(x:Int y:Int)
+    {
+        super(x,y);
+    }
+    
     override public function update(elapsed:Float):Void
     {
         if(!walking){
