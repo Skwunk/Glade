@@ -22,8 +22,8 @@ class PlayState extends FlxState
 
 	override public function create():Void
 	{
-		//World = new World();
-		//add(World.getTileLayers());
+		World = new World();
+		add(World);
 
 		animals = new FlxSpriteGroup();
 		add(animals);
