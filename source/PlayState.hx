@@ -1,7 +1,7 @@
 package;
 
 import flixel.FlxState;
-import entities.Player;
+import entities.player.Player;
 import flixel.FlxG;
 import cutscene.CutsceneState;
 
