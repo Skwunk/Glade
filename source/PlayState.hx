@@ -11,6 +11,7 @@ class PlayState extends FlxState
 {
 
 	var World:World;
+	var HUD:HUD;
 	var Player:Player;
 	var GrpItems:FlxTypedGroup<Item>;
 
@@ -24,6 +25,9 @@ class PlayState extends FlxState
 		FlxG.camera.follow(Player, TOPDOWN, 1);
 
 		GrpItems = new FlxTypedGroup();
+
+		HUD = new HUD(Player);
+		add(HUD);
 
 		super.create();
 	}
@@ -50,6 +54,11 @@ class PlayState extends FlxState
 		{
 			I.kill();
 		}
+	}
+
+	public function getPlayer():Player
+	{
+		return Player;
 	}
 
 }
