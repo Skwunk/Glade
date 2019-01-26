@@ -10,10 +10,12 @@ class Player extends DynamicEntity
 {
     
     var walking = false;
+    public var Happiness:Int;
     public var Bag:Inventory;
     
     public function new(?x:Int=0, ?y:Int=0)
     {
+        Happiness = 50;
         super(x,y);
         Bag = new Inventory();
     }
