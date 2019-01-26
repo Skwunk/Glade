@@ -10,20 +10,20 @@ import flixel.group.FlxGroup;
 class PlayState extends FlxState
 {
 
-	///var World:World;
+	var World:World;
 	var Player:Player;
 	var GrpItems:FlxTypedGroup<Item>;
 
 	override public function create():Void
 	{
-		//World = new World();
+		World = new World();
+		add(World.getTileLayers());
 
 		Player = new Player(5, 5);
 		add(Player);
+		FlxG.camera.follow(Player, TOPDOWN, 1);
 
 		GrpItems = new FlxTypedGroup();
-
-		//FlxG.switchState(new CutsceneState());
 
 		super.create();
 	}
