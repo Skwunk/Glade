@@ -11,6 +11,7 @@ class Animal extends DynamicEntity
     var currentPath = new Array<FlxPoint>();
     var walking = false;
     var happiness:Float = 0;
+    public var scritchable = true;
 
     private function dist(A:FlxPoint,Bx:Float,By:Float):Int
     {
@@ -113,7 +114,10 @@ class Animal extends DynamicEntity
             var heart = new FlxSprite(xpos,ypos);
             scene.add(heart);
             //Load heart asset here
-            FlxTween.tween(heart, {alpha: 0, y: y-50}, 1, {ease :FlxEase.cubeOut});
+            FlxTween.tween(heart, {alpha: 0, y: y-50}, 1, {
+                ease:FlxEase.cubeOut,
+                onComplete: function(_):Void {heart.destroy();}
+            });
         }
     }
 }
