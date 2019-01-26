@@ -5,6 +5,7 @@ import flixel.tweens.FlxEase;
 
 class Item extends StaticEntity
 {
+    public var ItemType:ITEM_TYPE;
 
     public function new(?x:Int=0, ?y:Int=0)
     {
@@ -22,4 +23,9 @@ class Item extends StaticEntity
         exists = false;
     }
 
+}
+
+enum ITEM_TYPE
+{
+    STICK;
 }
