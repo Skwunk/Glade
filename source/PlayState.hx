@@ -1,6 +1,8 @@
 package;
 
 import flixel.FlxState;
+import flixel.FlxG;
+import cutscene.CutsceneState;
 
 class PlayState extends FlxState
 {
@@ -11,6 +13,7 @@ class PlayState extends FlxState
 	{
 		World = new World();
 		super.create();
+		FlxG.switchState(new CutsceneState());
 	}
 
 	override public function update(elapsed:Float):Void
