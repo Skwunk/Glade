@@ -1,6 +1,7 @@
-package entities.animals.Animal;
+package entities.animals;
 
-class Floof extends Animal
+
+class Wolf extends Animal
 {
 
 }
