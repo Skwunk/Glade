@@ -17,10 +17,10 @@ class World extends FlxSpriteGroup
     private var TileHeight:Int = 64; 
     private var Tiles:Array<Array<Int>> = [[1, 1, 1, 1, 1, 1],[1, 0, 0, 1, 0, 0, 1],[1, 0, 0, 0, 0, 0, 1],[1, 0, 0, 1, 0, 0, 1],[1, 0, 0, 1, 0, 0, 1],[1, 1, 1, 1, 1, 1]];
 
-    private var UP = 8;
-    private var DOWN = 4;
-    private var LEFT = 2;
-    private var RIGHT = 1;
+    static var UP = 8;
+    static var DOWN = 4;
+    static var LEFT = 2;
+    static var RIGHT = 1;
 
     public function new()
     {
@@ -69,39 +69,39 @@ class World extends FlxSpriteGroup
     {
         if(!legal(x, y)) return -1;        
 
-        var out:Int = getBlockedDirections(x, y);
+        var out:Int = 0;//getBlockedDirections(x, y);
 
         //up
-        if(legal(y-1, x))
+        if(legal(x, y-1))
         {
-            out = out | (getBlockedDirections(y-1, x, true) & UP);
+            out = out | (getBlockedDirections(x, y-1, true) & UP);
         }
         else
         {
             out = out | UP;
         }
         //down
-        if(legal(y+1, x))
+        if(legal(x, y+1))
         {
-            out = out | (getBlockedDirections(y+1, x, true) & DOWN);
+            out = out | (getBlockedDirections(x, y+1, true) & DOWN);
         }
         else
         {
             out = out | DOWN;
         }
         //left
-        if(legal(y, x-1))
+        if(legal(x-1, y))
         {
-            out = out | (getBlockedDirections(y, x-1, true) & LEFT);
+            out = out | (getBlockedDirections(x-1, y, true) & LEFT);
         }
         else
         {
             out = out | LEFT;
         }
         //right
-        if(legal(y, x+1))
+        if(legal(x+1, y))
         {
-            out = out | (getBlockedDirections(y, x+1, true) & RIGHT);
+            out = out | (getBlockedDirections(x+1, y, true) & RIGHT);
         }
         else
         {
@@ -112,11 +112,11 @@ class World extends FlxSpriteGroup
 
     private function legal(x, y):Bool
     {
-        if(x < 0 || x > 5)
+        if(x < 0 || x > Tiles[0].length - 1)
         {
             return false;
         }
-        if(y < 0 || y > 5)
+        if(y < 0 || y > Tiles.length - 1)
         {
             return false;
         }
