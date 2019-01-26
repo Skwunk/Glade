@@ -3,9 +3,9 @@ package entities;
 class DynamicEntity extends Entity
 {
 
-    public function new(?X:Float=0, ?Y:Float=0)
+    override public function new(x:Int,y:Int):Void
     {
-        super(X, Y);
+        super(x, y);
     }
 
     override public function update(elapsed:Float):Void

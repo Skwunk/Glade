@@ -1,6 +1,7 @@
 package;
 
 import flixel.FlxState;
+import entities.Player;
 
 class PlayState extends FlxState
 {
