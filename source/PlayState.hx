@@ -2,6 +2,8 @@ package;
 
 import flixel.FlxState;
 import entities.Player;
+import flixel.FlxG;
+import cutscene.CutsceneState;
 
 class PlayState extends FlxState
 {
@@ -14,6 +16,7 @@ class PlayState extends FlxState
 		super.create();
 		var player = new Player(5,5);
 		add(player);
+		FlxG.switchState(new CutsceneState());
 	}
 
 	override public function update(elapsed:Float):Void
