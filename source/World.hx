@@ -15,7 +15,7 @@ class World extends FlxSpriteGrp
     var TileLayers:FlxTypedGroup<FlxTilemap>;
     var ObjectLayer:TiledObjectLayer;
 
-    public function new():Void
+    public function new()
     {
         Map = new TiledMap(); //TODO Add map asset
         TileLayers = new FlxTypedGroup<FlxTilemap>;
