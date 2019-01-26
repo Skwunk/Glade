@@ -2,6 +2,7 @@ package;
 
 import flixel.ui.FlxButton;
 import flixel.FlxG;
+import cutscene.CutsceneState;
 
 class MainMenuState extends MenuMasterState
 {
@@ -23,7 +24,7 @@ class MainMenuState extends MenuMasterState
 
     private function startNewGame():Void
     {
-        FlxG.switchState(new PlayState());
+        FlxG.switchState(new CutsceneState());
     }
     private function loadGame():Void
     {
