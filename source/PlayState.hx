@@ -1,18 +1,21 @@
 package;
 
 import flixel.FlxState;
+import entities.Player;
 import flixel.FlxG;
 import cutscene.CutsceneState;
 
 class PlayState extends FlxState
 {
 
-	var World:World;
+	///var World:World;
 
 	override public function create():Void
 	{
-		World = new World();
+		//World = new World();
 		super.create();
+		var player = new Player(5,5);
+		add(player);
 		FlxG.switchState(new CutsceneState());
 	}
 
