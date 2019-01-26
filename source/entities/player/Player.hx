@@ -10,11 +10,12 @@ class Player extends DynamicEntity
 {
     
     var walking = false;
-    var GrpInventory:FlxTypedGroup<Item>;
+    public var Bag:Inventory;
     
     public function new(?x:Int=0, ?y:Int=0)
     {
         super(x,y);
+        Bag = new Inventory();
     }
     
     override public function update(elapsed:Float):Void
