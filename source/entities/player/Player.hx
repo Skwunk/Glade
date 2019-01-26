@@ -1,10 +1,12 @@
 package entities.player;
 
 import flixel.FlxG;
+import flixel.util.FlxColor;
 import flixel.group.FlxGroup;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
 import entities.items.Item;
+import World;
 
 class Player extends DynamicEntity
 {
@@ -12,31 +14,35 @@ class Player extends DynamicEntity
     var walking = false;
     public var Happiness:Int;
     public var Bag:Inventory;
+    private var world:World;
     
-    public function new(?x:Int=0, ?y:Int=0)
+    public function new(?x:Int=0, ?y:Int=0, world:World)
     {
         Happiness = 50;
         super(x,y);
         Bag = new Inventory();
+        this.world = world;
+        makeGraphic(64,64,FlxColor.ORANGE);
     }
     
     override public function update(elapsed:Float):Void
     {
         if(!walking){
             var oldPos = {x:worldx,y:worldy};
-            if (FlxG.keys.pressed.LEFT){
+            var blocked = world.getWalkableDirections(worldx,worldy);
+            if (FlxG.keys.pressed.LEFT && (blocked & World.LEFT) == 0){
                 worldx--;
                 walking = true;
             }
-            if (FlxG.keys.pressed.RIGHT){
+            if (FlxG.keys.pressed.RIGHT && (blocked & World.RIGHT) == 0){
                 worldx++;
                 walking = true;
             }
-            if (FlxG.keys.pressed.UP){
+            if (FlxG.keys.pressed.UP && (blocked & World.UP) == 0){
                 worldy--;
                 walking = true;
             }
-            if (FlxG.keys.pressed.DOWN){
+            if (FlxG.keys.pressed.DOWN && (blocked & World.DOWN) == 0){
                 worldy++;
                 walking = true;
             }

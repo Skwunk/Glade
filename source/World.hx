@@ -17,10 +17,10 @@ class World extends FlxSpriteGroup
     private var TileHeight:Int = 64; 
     private var Tiles:Array<Array<Int>> = [[1, 1, 1, 1, 1, 1],[1, 0, 0, 1, 0, 0, 1],[1, 0, 0, 0, 0, 0, 1],[1, 0, 0, 1, 0, 0, 1],[1, 0, 0, 1, 0, 0, 1],[1, 1, 1, 1, 1, 1]];
 
-    private var UP = 8;
-    private var DOWN = 4;
-    private var LEFT = 2;
-    private var RIGHT = 1;
+    static var UP = 8;
+    static var DOWN = 4;
+    static var LEFT = 2;
+    static var RIGHT = 1;
 
     public function new()
     {
@@ -69,12 +69,13 @@ class World extends FlxSpriteGroup
     {
         if(!legal(x, y)) return -1;        
 
-        var out:Int = getBlockedDirections(x, y);
+        var out:Int = 0;//getBlockedDirections(x, y);
 
         //up
         if(legal(y-1, x))
         {
             out = out | (getBlockedDirections(y-1, x, true) & UP);
+            trace(getBlockedDirections(y, x+1, true));
         }
         else
         {

@@ -22,7 +22,7 @@ class PlayState extends FlxState
 
 	override public function create():Void
 	{
-		World = new World();
+		this.World = new World();
 		add(World);
 
 		animals = new FlxSpriteGroup();
@@ -32,7 +32,7 @@ class PlayState extends FlxState
 
 		GrpItems = new FlxTypedGroup();
 
-		Player = new Player(5, 5);
+		Player = new Player(2, 2, this.World);
 		add(Player);
 
 		FlxG.camera.follow(Player, TOPDOWN, 1);
