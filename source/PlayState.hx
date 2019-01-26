@@ -25,16 +25,17 @@ class PlayState extends FlxState
 		//World = new World();
 		//add(World.getTileLayers());
 
-		Player = new Player(5, 5);
-		add(Player);
-
 		animals = new FlxSpriteGroup();
 		add(animals);
 		var wolf = new Wolf(8,8);
 		animals.add(wolf);
-		FlxG.camera.follow(Player, TOPDOWN, 1);
 
 		GrpItems = new FlxTypedGroup();
+
+		Player = new Player(5, 5);
+		add(Player);
+
+		FlxG.camera.follow(Player, TOPDOWN, 1);
 
 		HUD = new HUD(Player);
 		add(HUD);

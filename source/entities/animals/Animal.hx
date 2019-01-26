@@ -109,12 +109,12 @@ class Animal extends DynamicEntity
         var num_hearts = Std.int(delta_h/6)+1;
         for(i in 0...num_hearts)
         {
-            var xpos = x + (Math.random() - 0.5)*20;
-            var ypos = y + Math.random()*20 - 30;
+            var xpos = x + (Math.random() - 0.5)*60;
+            var ypos = y + Math.random()*20 - 60;
             var heart = new FlxSprite(xpos,ypos);
             scene.add(heart);
-            //Load heart asset here
-            FlxTween.tween(heart, {alpha: 0, y: y-50}, 1, {
+            heart.loadGraphic(AssetPaths.Heart__png);
+            FlxTween.tween(heart, {alpha: 0, y: y-100}, 1, {
                 ease:FlxEase.cubeOut,
                 onComplete: function(_):Void {heart.destroy();}
             });
