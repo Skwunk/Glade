@@ -1,7 +1,7 @@
 package;
 
 import flixel.FlxState;
-import entities.items.Item;
+import entities.items.*;
 import entities.player.Player;
 import entities.animals.*;
 import flixel.group.FlxSpriteGroup;
@@ -18,7 +18,7 @@ class PlayState extends FlxState
 	var HUD:HUD;
 	var Player:Player;
 	var animals:FlxSpriteGroup;
-	var GrpItems:FlxTypedGroup<Item>;
+	var GrpItems:FlxSpriteGroup;
 
 	override public function create():Void
 	{
@@ -30,11 +30,13 @@ class PlayState extends FlxState
 		var wolf = new Wolf(8,8);
 		animals.add(wolf);
 
-		GrpItems = new FlxTypedGroup();
+		GrpItems = new FlxSpriteGroup();
+		add(GrpItems);
+		var stick = new Stick(6,6);
+		GrpItems.add(stick);
 
 		Player = new Player(5, 5);
 		add(Player);
-
 		FlxG.camera.follow(Player, TOPDOWN, 1);
 
 		HUD = new HUD(Player);
@@ -56,6 +58,7 @@ class PlayState extends FlxState
 				if(an.scritchable) an.scritch(this);
 			}
 		}
+		FlxG.overlap(Player, GrpItems, playerTouchItem);
 	}
 
 	function placeEntity(entityName:String, entityData:Xml):Void
@@ -73,8 +76,15 @@ class PlayState extends FlxState
 	{
 		if(P.alive && P.exists && I.alive && I.exists)
 		{
+			Player.Bag.GiveItem(I.ItemType, 1);
 			I.kill();
+			GrpItems.forEachDead(removeItemFromGrp);
 		}
+	}
+
+	function removeItemFromGrp(i:FlxSprite)
+	{
+		i.destroy();
 	}
 
 	public function getPlayer():Player

@@ -2,6 +2,8 @@ package entities.items;
 
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
+import entities.player.Inventory;
+import entities.player.Player;
 
 class Item extends StaticEntity
 {
