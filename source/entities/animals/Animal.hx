@@ -3,11 +3,13 @@ package entities.animals;
 import flixel.math.FlxPoint;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
+import flixel.FlxSprite;
 
 class Animal extends DynamicEntity
 {
     var currentPath = new Array<FlxPoint>();
     var walking = false;
+    var happiness:Float = 0;
 
     private function dist(A:FlxPoint,Bx:Float,By:Float):Int
     {
@@ -93,6 +95,23 @@ class Animal extends DynamicEntity
                     walking = false;
                 }
             });
+        }
+    }
+
+    public function scritch()
+    {
+        var delta_h = Math.random()*16;
+        if(happiness + delta_h > 80){
+            delta_h = Math.max(0,80-happiness);
+        }
+        var num_hearts = Std.int(delta_h/30)
+        for(i in 1...num_hearts)
+        {
+            var xpos = x + (Math.random() - 0.5)*20;
+            var ypos = y + Math.random()*20;
+            var heart = new FlxSprite(xpos,ypos);
+            //Load heart asset here
+            FlxTween.tween(this, {alpha: 0, y: y-16}, Math.random() + 0.3, {ease :FlxEase.cubeIn, onComplete: finishKill});
         }
     }
 }
