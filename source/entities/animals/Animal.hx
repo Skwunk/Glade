@@ -4,6 +4,7 @@ import flixel.math.FlxPoint;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
 import flixel.FlxSprite;
+import flixel.FlxState;
 
 class Animal extends DynamicEntity
 {
@@ -98,20 +99,21 @@ class Animal extends DynamicEntity
         }
     }
 
-    public function scritch()
+    public function scritch(scene:FlxState)
     {
         var delta_h = Math.random()*16;
         if(happiness + delta_h > 80){
             delta_h = Math.max(0,80-happiness);
         }
-        var num_hearts = Std.int(delta_h/30)
-        for(i in 1...num_hearts)
+        var num_hearts = Std.int(delta_h/6)+1;
+        for(i in 0...num_hearts)
         {
             var xpos = x + (Math.random() - 0.5)*20;
-            var ypos = y + Math.random()*20;
+            var ypos = y + Math.random()*20 - 30;
             var heart = new FlxSprite(xpos,ypos);
+            scene.add(heart);
             //Load heart asset here
-            FlxTween.tween(this, {alpha: 0, y: y-16}, Math.random() + 0.3, {ease :FlxEase.cubeIn, onComplete: finishKill});
+            FlxTween.tween(heart, {alpha: 0, y: y-50}, 1, {ease :FlxEase.cubeOut});
         }
     }
 }

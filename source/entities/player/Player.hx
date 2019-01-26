@@ -22,19 +22,19 @@ class Player extends DynamicEntity
         if(!walking){
             var oldPos = {x:worldx,y:worldy};
             if (FlxG.keys.pressed.LEFT){
-                worldy++;
-                walking = true;
-            }
-            if (FlxG.keys.pressed.RIGHT){
-                worldy--;
-                walking = true;
-            }
-            if (FlxG.keys.pressed.UP){
                 worldx--;
                 walking = true;
             }
-            if (FlxG.keys.pressed.DOWN){
+            if (FlxG.keys.pressed.RIGHT){
                 worldx++;
+                walking = true;
+            }
+            if (FlxG.keys.pressed.UP){
+                worldy--;
+                walking = true;
+            }
+            if (FlxG.keys.pressed.DOWN){
+                worldy++;
                 walking = true;
             }
             var newPos = Entity.toScreenPos(worldx,worldy);
