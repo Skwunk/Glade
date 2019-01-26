@@ -1,14 +1,15 @@
 package;
 
-import flixel.FlxSpriteGroup;
+import flixel.FlxBasic;
+import flixel.group.FlxSpriteGroup;
 import flixel.tile.FlxTilemap;
-import flixel.tile.FlxTilemapAutoTiling;
+import flixel.tile.FlxBaseTilemap;
 import flixel.group.FlxGroup;
-import flixel.addons.tiled.TiledMap;
-import flixel.addons.tiled.TiledTileLayer;
-import flixel.addons.tiled.TiledObjectLayer;
+import flixel.addons.editors.tiled.TiledMap;
+import flixel.addons.editors.tiled.TiledTileLayer;
+import flixel.addons.editors.tiled.TiledObjectLayer;
 
-class World extends FlxSpriteGrp
+class World
 {
 
     var Map:TiledMap;
@@ -17,23 +18,28 @@ class World extends FlxSpriteGrp
 
     public function new():Void
     {
-        Map = new TiledMap(); //TODO Add map asset
-        TileLayers = new FlxTypedGroup<FlxTilemap>;
+        Map = new TiledMap(AssetPaths.Map__tmx); //TODO Add map asset
+        TileLayers = new FlxTypedGroup<FlxTilemap>();
 
         for(layer in Map.layers)
         {
-            if(layer.name ==  "objects");
+            if(layer.name ==  "objects")
             {
                 ObjectLayer = cast Map.getLayer("objects");
             } else {
                 var tmpTilemap = new FlxTilemap();
                 tmpTilemap.loadMapFromArray(cast(layer, TiledTileLayer).tileArray, Map.width, Map.height
-                , AssetPaths.tiles__png, Map.tileWidth, Map.tileHeight, FlxTilemapAutoTiling.OFF, 1, 1 , 3);
+                , AssetPaths.TileMap__png, Map.tileWidth, Map.tileHeight, FlxTilemapAutoTiling.OFF, 1, 1 , 3);
                 TileLayers.add(tmpTilemap);
             }
         }
 
         //Tile properties go here
+    }
+
+    public function getTileLayers():FlxTypedGroup<FlxTilemap>
+    {
+        return TileLayers;
     }
 
 }
