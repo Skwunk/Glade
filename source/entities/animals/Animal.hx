@@ -12,6 +12,7 @@ class Animal extends DynamicEntity
     var walking = false;
     var happiness:Float = 0;
     public var scritchable = true;
+    var state = IDLE;
 
     private function dist(A:FlxPoint,Bx:Float,By:Float):Int
     {
@@ -31,7 +32,7 @@ class Animal extends DynamicEntity
         q = new Node(this.worldx,this.worldy,0,dist(dest,worldx,worldy));
         var p:Node;
 
-        while(((openNodes.length > 0 && steps < 100) || steps == 0 ) && !found){
+        while(((openNodes.length > 0 && steps < 30) || steps == 0 ) && !found){
             //find the node with the least f on the open list, call it "q"
             openNodes.sort(function(A:Node,B:Node):Int
             {
@@ -76,9 +77,9 @@ class Animal extends DynamicEntity
     }
 
     public function walkTo(x:Int,y:Int){
-        if(currentPath.length == 0){
-            findPath(new FlxPoint(x,y));
-        }
+        state = ACTIVE;
+        currentPath = currentPath.filter(function(_){return false;});
+        findPath(new FlxPoint(x,y));
     }
 
     public override function update(elapsed:Float){
@@ -99,6 +100,26 @@ class Animal extends DynamicEntity
                     walking = false;
                 }
             });
+        } else {
+            if(state == ACTIVE){
+                state = IDLE;
+            } else {
+                var behaviour = Math.random();
+                if(behaviour < 0.001){
+                    if(state == IDLE){
+                        state = WANDERING;
+                    }
+                }
+                if(state == WANDERING && currentPath.length == 0 && !walking){
+                    // Do some random pathing
+                    trace("tried to path");
+                    var dx = Math.round(Math.random())*5 - 2.5;
+                    var dy = Math.round(Math.random())*5 - 2.5;
+                    findPath(new FlxPoint(worldx+dx,worldy+dy));
+                    state = IDLE;
+                }
+            }
+
         }
     }
 
@@ -143,4 +164,10 @@ private class Node extends FlxPoint
     {
         return other.x == x && other.y == y;
     }
+}
+
+enum STATES{
+    IDLE;
+    ACTIVE;
+    WANDERING;
 }
