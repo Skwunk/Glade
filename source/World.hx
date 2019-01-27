@@ -19,6 +19,7 @@ class World extends FlxSpriteGroup
     private var TileHeight:Int = 64; 
     private var Tiles:Array<Array<Int>> = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
     public static var isBuiltTile:Array<Bool> = [false,false,true];
+    private var TileAssets:FlxSpriteGroup;
 
     private var Objects:Array<Object> = [];
 
@@ -37,6 +38,7 @@ class World extends FlxSpriteGroup
         super();
         Foreground = new FlxSpriteGroup();
         Items = new FlxSpriteGroup();
+        TileAssets = new FlxSpriteGroup();
         updateImage();
     }
 
@@ -47,6 +49,13 @@ class World extends FlxSpriteGroup
         }
 
         clear();
+
+        for(t in TileAssets)
+        {
+            t.destroy();
+        }
+
+        
         for(y in 0...(Tiles.length))
         {
             for(x in 0...(Tiles[y].length))
