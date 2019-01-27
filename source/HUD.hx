@@ -183,6 +183,7 @@ class HUD extends FlxSpriteGroup
                 HUDPlayer.Bag.Order.add(item4type);
             }
             add(Items);
+            HUDPlayer.Bag.setChangeFalse();
         }
         super.update(elapsed);
     }
