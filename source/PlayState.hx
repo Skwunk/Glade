@@ -32,7 +32,7 @@ class PlayState extends FlxState
 
 		GrpItems = new FlxSpriteGroup();
 		add(GrpItems);
-		var stick = new Stick(6,6);
+		var stick = new Stick(3, 2);
 		GrpItems.add(stick);
 
 		Player = new Player(2, 2, this.World);
