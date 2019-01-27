@@ -55,6 +55,7 @@ class PlayState extends FlxState
 
 		HUD = new HUD(Player);
 		add(HUD);
+		add(HUD.AnimalBarGroup);
 
 		super.create();
 	}
@@ -93,11 +94,22 @@ class PlayState extends FlxState
 
 		if(FlxG.mouse.justPressed){
 			// Check player has material
-			if(true){
-				var buildx = Std.int((FlxG.camera.x + FlxG.mouse.x)/64);
-				var buildy = Std.int((FlxG.camera.y + FlxG.mouse.y)/64);
-				World.setTile(buildx, buildy, 2);
-				World.updateImage();
+			trace("You clicked");
+			switch(Player.Bag.Order.first())
+			{
+				case STICK:
+					if(Player.Bag.HasItem(STICK, 1) >= 1){
+						trace("Has stuff");
+						var buildx = Std.int((FlxG.camera.x + FlxG.mouse.x)/64);
+						var buildy = Std.int((FlxG.camera.y + FlxG.mouse.y)/64);
+						trace(buildx + "," + buildy);
+						World.setTile(buildx, buildy, 2);
+						Player.Bag.RemoveItem(STICK, 1);
+					}
+				case ACORN:
+					1;
+				default:
+					1;
 			}
 		}
 
