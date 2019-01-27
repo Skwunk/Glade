@@ -18,6 +18,7 @@ class World extends FlxSpriteGroup
     private var TileWidth:Int = 64;
     private var TileHeight:Int = 64; 
     private var Tiles:Array<Array<Int>> = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
+    public static var isBuiltTile:Array<Bool> = [false,false,true];
 
     private var Objects:Array<Object> = [];
 
@@ -39,8 +40,12 @@ class World extends FlxSpriteGroup
         updateImage();
     }
 
-    private function updateImage():Void
+    public function updateImage():Void
     {
+        for(o in Objects){
+            remove(o);
+        }
+
         clear();
         for(y in 0...(Tiles.length))
         {
@@ -49,10 +54,18 @@ class World extends FlxSpriteGroup
                 if(Tiles[y][x] == 0)
                 {
                     var holder:FlxSprite = new FlxSprite(x*TileWidth, y*TileHeight);
-                    holder.makeGraphic(TileWidth, TileHeight, FlxColor.WHITE);
+                    holder.makeGraphic(TileWidth, TileHeight, FlxColor.GREEN);
+                    add(holder);
+                } else if(Tiles[y][x] == 2) {
+                    var holder:FlxSprite = new FlxSprite(x*TileWidth, y*TileHeight);
+                    holder.makeGraphic(TileWidth, TileHeight, 0xFF333333);
                     add(holder);
                 }
             }
+        }
+
+        for(o in Objects){
+            add(o);
         }
 
     }

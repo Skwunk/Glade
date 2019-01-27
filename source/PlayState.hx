@@ -38,7 +38,11 @@ class PlayState extends FlxState
 		animals.add(wolf);
 		var squirrel = new Squirrel(1,1,this.World);
 		animals.add(squirrel);
+		var beaver = new Beaver(7,5,this.World);
+		animals.add(beaver);
 
+
+		GrpItems = new FlxSpriteGroup();
 		add(this.World.Items);
 		var stick = new Stick(5,2);
 		this.World.Items.add(stick);
@@ -68,6 +72,7 @@ class PlayState extends FlxState
 				if(an.scritchable) an.scritch(this);
 			}
 		}
+
 		if(FlxG.keys.justPressed.R){
 			var nearbyAnimals = animals.members.filter(function(s:FlxSprite):Bool{
 				var a = cast(s,Animal);
@@ -85,6 +90,27 @@ class PlayState extends FlxState
 				
 			}
 		}
+
+		if(FlxG.mouse.justPressed){
+			// Check player has material
+			trace("You clicked");
+			if(true){
+				trace("Has stuff");
+				var buildx = Std.int((FlxG.camera.x + FlxG.mouse.x)/64);
+				var buildy = Std.int((FlxG.camera.y + FlxG.mouse.y)/64);
+				trace(buildx + "," + buildy);
+				World.setTile(buildx, buildy, 2);
+				World.updateImage();
+			}
+		}
+
+		var happiness:Float = 0;
+		for(s in animals.members){
+			var a = cast(s,Animal);
+			happiness += a.happiness;
+		}
+		Player.Happiness = Std.int(happiness/animals.length);
+
 		FlxG.overlap(Player, this.World.Items, playerTouchItem);
 
 		//handle animal ui interatcion

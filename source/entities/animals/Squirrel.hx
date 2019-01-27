@@ -4,6 +4,8 @@ import World;
 import entities.items.Berry;
 import flixel.util.FlxColor;
 import flixel.math.FlxPoint;
+import entities.scenery.Object;
+import entities.scenery.Trunk;
 
 class Squirrel extends Animal
 {
@@ -17,6 +19,10 @@ class Squirrel extends Animal
     public override function update(elapsed:Float)
     {
         super.update(elapsed);
+        var num_trees = world.getObjects().filter(function(o:Object){
+            return o.ObjectType == TREE;
+        }).length;
+        happiness = Math.min(num_trees * 5,100);
     }
 
     public function fetchFood(x:Int,y:Int):Void
