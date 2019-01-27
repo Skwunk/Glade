@@ -135,7 +135,7 @@ class Animal extends DynamicEntity
 
     public function scritch(scene:FlxState)
     {
-        var delta_h = Math.random()*16;
+        var delta_h = Math.random()*15 + 5;
         if(happiness + delta_h > 80){
             delta_h = Math.max(0,80-happiness);
         }

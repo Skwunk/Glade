@@ -1,7 +1,6 @@
 package entities.animals;
 
 import World;
-import entities.items.Berry;
 import flixel.util.FlxColor;
 import flixel.math.FlxPoint;
 import entities.scenery.Object;
@@ -13,16 +12,20 @@ class Squirrel extends Animal
     {
         super(x,y,w);
         scritchable = false;
-        makeGraphic(20,40,FlxColor.fromRGB(200,50,0));
+        makeGraphic(30,50,FlxColor.BROWN);
     }
 
     public override function update(elapsed:Float)
     {
         super.update(elapsed);
-        var num_trees = world.getObjects().filter(function(o:Object){
+        var num_built = world.getObjects().filter(function(o:Object){
             return o.ObjectType == TREE;
         }).length;
         happiness = num_trees * 5;
+    }
+
+    public function updateHappiness(){
+        
     }
 
     public function fetchFood(x:Int,y:Int):Void

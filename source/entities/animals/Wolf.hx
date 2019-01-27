@@ -11,4 +11,10 @@ class Wolf extends Animal
         scritchable = true;
         makeGraphic(64,32,FlxColor.GRAY);
     }
+
+    public override function update(elapsed:Float)
+    {
+        super.update(elapsed);
+        happiness -= happiness*0.01 * elapsed;
+    }
 }

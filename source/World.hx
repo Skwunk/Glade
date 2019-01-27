@@ -11,6 +11,7 @@ import flixel.addons.editors.tiled.TiledObjectLayer;
 import flixel.util.FlxColor;
 import flixel.FlxSprite;
 import entities.StaticEntity;
+import entities.scenery.Object;
 
 class World extends FlxSpriteGroup
 {
@@ -46,7 +47,7 @@ class World extends FlxSpriteGroup
                 if(Tiles[y][x] == 0)
                 {
                     var holder:FlxSprite = new FlxSprite(x*TileWidth, y*TileHeight);
-                    holder.makeGraphic(TileWidth, TileHeight, FlxColor.WHITE);
+                    holder.makeGraphic(TileWidth, TileHeight, FlxColor.GREEN);
                     add(holder);
                 }
             }
