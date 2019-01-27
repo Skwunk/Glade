@@ -20,7 +20,7 @@ class MainMenuState extends MenuMasterState
 
     private function startNewGame():Void
     {
-        FlxG.switchState(new PlayState);
+        FlxG.switchState(new PlayState());
     }
     private function loadGame():Void
     {

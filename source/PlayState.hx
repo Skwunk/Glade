@@ -64,9 +64,11 @@ class PlayState extends FlxState
 	{
 		super.update(elapsed);
 
-		if(Player.Happiness >= 90)
+		trace(Player.Happiness);
+
+		if(Player.Happiness >= 85)
 		{
-			FlxG.switchState(new CutsceneState);
+			FlxG.switchState(new CutsceneState());
 		}
 
 		if(FlxG.keys.justPressed.SPACE){
