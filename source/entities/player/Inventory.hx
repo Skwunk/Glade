@@ -6,15 +6,18 @@ class Inventory
 {
 	public var Order:List<ITEM_TYPE>;
 	public var Bag:Map<ITEM_TYPE, Int>;
+	public var hasChanged:Bool;
 
 	public function new()
 	{
 		Order = new List<ITEM_TYPE>();
 		Bag = new Map<ITEM_TYPE, Int>();
+		hasChanged = false;
 	}
 
 	public function GiveItem(item:ITEM_TYPE, number:Int=1):Bool
 	{
+		hasChanged = true;
 		if(Bag.exists(item))
 		{
 			Bag.set(item, Bag.get(item) + number);
@@ -29,6 +32,7 @@ class Inventory
 
 	public function RemoveItem(item:ITEM_TYPE, number:Int=-1):Bool
 	{
+		hasChanged = true;
 		if(!Bag.exists(item))
 		{
 			return false;
@@ -58,4 +62,10 @@ class Inventory
 			return Bag.get(item);
 		}
 	}
+
+	public function setChangeFalse():Void
+	{
+		hasChanged = false;
+	}
+
 }

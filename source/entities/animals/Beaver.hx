@@ -17,7 +17,6 @@ class Beaver extends Animal
     {
         super.update(elapsed);
         lastHappinessUpdate += elapsed;
-        trace(lastHappinessUpdate);
         if(lastHappinessUpdate > 1){
             lastHappinessUpdate = 0;
             updateHappiness();

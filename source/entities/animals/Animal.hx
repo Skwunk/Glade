@@ -60,7 +60,6 @@ class Animal extends DynamicEntity
                     p.parent = q;
                     openNodes.push(p);
                     q = p;
-                    trace("Got to destination");
                     found = true;
                     break;
                 }
@@ -84,7 +83,6 @@ class Animal extends DynamicEntity
             currentPath.push(q);
             q = q.parent;
         }
-        trace(currentPath);
     }
 
     public function walkTo(x:Int,y:Int,?active:Bool=true,?callArrival:Bool=false){
@@ -124,7 +122,6 @@ class Animal extends DynamicEntity
                 }
                 if(state == WANDERING && currentPath.length == 0 && !walking){
                     // Do some random pathing
-                    trace("tried to path");
                     var dx:Int = cast Math.round(Math.random())*5 - 2.5;
                     var dy:Int = cast Math.round(Math.random())*5 - 2.5;
                     walkTo(worldx+dx,worldy+dy);
