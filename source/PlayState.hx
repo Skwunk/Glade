@@ -63,6 +63,12 @@ class PlayState extends FlxState
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
+
+		if(Player.Happiness >= 90)
+		{
+			FlxG.switchState(new CutsceneState);
+		}
+
 		if(FlxG.keys.justPressed.SPACE){
 			var sameTileAnimals = animals.members.filter(function(s:FlxSprite):Bool{
 				var a = cast(s,Animal);

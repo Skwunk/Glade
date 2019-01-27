@@ -25,7 +25,7 @@ class CutsceneState extends FlxState
 		add(Text);
 
 		Commands = new Array<COMMAND>();
-		Commands = [ShowImage("assets/images/t.png"), ShowText("one"), MakeImage(0, 255, 0), ShowText("two")];
+		Commands = [MakeImage(0, 255, 0), ShowText("You've won"), ShowText("all the animals are very happy"), ShowText("good job")];
 		runCommands();
 	}
 
@@ -39,7 +39,7 @@ class CutsceneState extends FlxState
 			}
 			else
 			{
-				FlxG.switchState(new PlayState());
+				FlxG.switchState(new MainMenuState());
 			}
 		}
 	}
