@@ -16,6 +16,8 @@ class HUD extends FlxSpriteGroup
     var HappinessGraphic:FlxSprite;
     var HappinessBar:FlxBar;
 
+    public var AnimalBarGroup:FlxSpriteGroup;
+
     var ItemBar:FlxSprite;
     var Items:FlxSpriteGroup;
 
@@ -25,19 +27,22 @@ class HUD extends FlxSpriteGroup
     {
         super(x, y);
         HUDPlayer = player;
+        scrollFactor.set(0, 0);
 
         HappinessGraphic = new FlxSprite();
         HappinessGraphic.loadGraphic(AssetPaths.Heart__png, false, 32, 32);
         HappinessGraphic.x = 16;
         HappinessGraphic.y = 16;
-        HappinessGraphic.scrollFactor.set(0,0);
+
+        AnimalBarGroup = new FlxSpriteGroup();
+        
 
         add(HappinessGraphic);
 
         HappinessBar = new FlxBar(60, 24, LEFT_TO_RIGHT, 100, 16, player, "Happiness");
 
         HappinessBar.createFilledBar(0xFF63460C, 0xFFE6AA2F);
-        HappinessBar.scrollFactor.set(0, 0);
+        HappinessBar.scrollFactor.set(1, 1);
 
         add(HappinessBar);
 
@@ -47,7 +52,6 @@ class HUD extends FlxSpriteGroup
         ItemBar.loadGraphic(AssetPaths.ItemBar__png, false, 348, 76);
         ItemBar.x = Math.floor(FlxG.width/2 - ItemBar.width/2);
         ItemBar.y = Math.floor(FlxG.height - ItemBar.height - 8);
-        ItemBar.scrollFactor.set(0, 0);
         add(ItemBar);
     }
 
@@ -168,17 +172,17 @@ class HUD extends FlxSpriteGroup
         bar.createFilledBar(0xFF63460C, 0xFFE6AA2F);
         if (AnimalBars.exists(animal)) 
         {
-           remove(AnimalBars.get(animal));
+           AnimalBarGroup.remove(AnimalBars.get(animal));
         }
         AnimalBars.set(animal, bar);
-        add(bar);
+        AnimalBarGroup.add(bar);
     }
 
     public function removeAnimalBar(animal:Animal):Void
     {
         if (AnimalBars.exists(animal)) 
         {
-           remove(AnimalBars.get(animal));
+           AnimalBarGroup.remove(AnimalBars.get(animal));
         }
         AnimalBars.remove(animal);
     }
