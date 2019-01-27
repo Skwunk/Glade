@@ -1,5 +1,7 @@
 package entities.items;
 
+import flixel.util.FlxColor;
+
  class Berry extends Item
  {
 
@@ -7,6 +9,7 @@ package entities.items;
      {
         super(x,y);
         ItemType = BERRY;
+        makeGraphic(10,10,FlxColor.RED);
      }
      
  }

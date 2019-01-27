@@ -31,6 +31,10 @@ class Squirrel extends Animal
     }
 
     public override function onArrival(){
-        world.Items.add(new Acorn(worldx,worldy));
+        if(Math.random() > 0.4){
+            world.Items.add(new Acorn(worldx,worldy));
+        } else {
+            world.Items.add(new Berry(worldx,worldy));
+        }
     }
 }
