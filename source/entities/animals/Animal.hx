@@ -85,7 +85,9 @@ class Animal extends DynamicEntity
         super.update(elapsed);
         if(!walking && currentPath.length > 0){
             var nextPoint = currentPath.pop();
-            var newPos = Entity.toScreenPos(Std.int(nextPoint.x),Std.int(nextPoint.y));
+            worldx = Std.int(nextPoint.x);
+            worldy = Std.int(nextPoint.y);
+            var newPos = Entity.toScreenPos(worldx,worldy);
             walking = true;
             FlxTween.tween(this, {
                 x:newPos.x,
