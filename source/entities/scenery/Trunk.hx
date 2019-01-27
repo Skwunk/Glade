@@ -13,6 +13,7 @@ class Trunk extends StaticEntity
         super(x,y);
         makeGraphic(64,64,FlxColor.BROWN);
         world = w;
+        passable = false;
     }
 
     public function makeLeaves():Leaves
