@@ -34,7 +34,7 @@ class PlayState extends FlxState
 
 		animals = new FlxSpriteGroup();
 		add(animals);
-		var wolf = new Wolf(8,8);
+		var wolf = new Wolf(5,4, this.World);
 		animals.add(wolf);
 
 		GrpItems = new FlxSpriteGroup();

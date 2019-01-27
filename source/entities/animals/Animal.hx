@@ -5,6 +5,7 @@ import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import World;
 
 class Animal extends DynamicEntity
 {
@@ -13,6 +14,12 @@ class Animal extends DynamicEntity
     var happiness:Float = 0;
     public var scritchable = true;
     var state = IDLE;
+    var world:World;
+
+    public function new(x:Int,y:Int,w:World){
+        super(x,y);
+        world = w;
+    }
 
     private function dist(A:FlxPoint,Bx:Float,By:Float):Int
     {
@@ -40,11 +47,13 @@ class Animal extends DynamicEntity
             });
             if(steps > 0) q = openNodes.pop();
             //Generate successors
-            var up = new Node(q.x,q.y-1,q.g+1,dist(dest,q.x,q.y-1));
-            var down = new Node(q.x,q.y+1,q.g+1,dist(dest,q.x,q.y+1));
-            var left = new Node(q.x-1,q.y,q.g+1,dist(dest,q.x-1,q.y));
-            var right = new Node(q.x+1,q.y,q.g+1,dist(dest,q.x+1,q.y));
-            for(p in [up,down,left,right]){
+            var blocked = world.getWalkableDirections(Std.int(q.x),Std.int(q.y));
+            var succ = new Array<Node>();
+            if(blocked & World.UP == 0)    succ.push(new Node(q.x,  q.y-1,q.g+1,dist(dest,q.x,  q.y-1)));
+            if(blocked & World.DOWN == 0)  succ.push(new Node(q.x,  q.y+1,q.g+1,dist(dest,q.x,  q.y+1)));
+            if(blocked & World.LEFT == 0)  succ.push(new Node(q.x-1,q.y,  q.g+1,dist(dest,q.x-1,q.y  )));
+            if(blocked & World.RIGHT == 0) succ.push(new Node(q.x+1,q.y,  q.g+1,dist(dest,q.x+1,q.y  )));
+            for(p in succ){
                 if(p.eq(dest)){
                     p.parent = q;
                     openNodes.push(p);
@@ -76,8 +85,8 @@ class Animal extends DynamicEntity
         trace(currentPath);
     }
 
-    public function walkTo(x:Int,y:Int){
-        state = ACTIVE;
+    public function walkTo(x:Int,y:Int,?active:Bool=true){
+        state = active ? ACTIVE : IDLE;
         currentPath = currentPath.filter(function(_){return false;});
         findPath(new FlxPoint(x,y));
     }
@@ -113,13 +122,11 @@ class Animal extends DynamicEntity
                 if(state == WANDERING && currentPath.length == 0 && !walking){
                     // Do some random pathing
                     trace("tried to path");
-                    var dx = Math.round(Math.random())*5 - 2.5;
-                    var dy = Math.round(Math.random())*5 - 2.5;
-                    findPath(new FlxPoint(worldx+dx,worldy+dy));
-                    state = IDLE;
+                    var dx:Int = cast Math.round(Math.random())*5 - 2.5;
+                    var dy:Int = cast Math.round(Math.random())*5 - 2.5;
+                    walkTo(worldx+dx,worldy+dy);
                 }
             }
-
         }
     }
 
