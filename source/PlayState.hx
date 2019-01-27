@@ -39,10 +39,9 @@ class PlayState extends FlxState
 		var squirrel = new Squirrel(1,1,this.World);
 		animals.add(squirrel);
 
-		GrpItems = new FlxSpriteGroup();
-		add(GrpItems);
-		var stick = new Stick(6,6);
-		GrpItems.add(stick);
+		add(this.World.Items);
+		var stick = new Stick(5,2);
+		this.World.Items.add(stick);
 
 		Player = new Player(2, 2, this.World);
 		add(Player);
@@ -73,14 +72,20 @@ class PlayState extends FlxState
 			var nearbyAnimals = animals.members.filter(function(s:FlxSprite):Bool{
 				var a = cast(s,Animal);
 				var dist = Math.abs(a.worldx - Player.worldx) + Math.abs(a.worldy - Player.worldy);
-				return dist < 25 && Std.is(a,Wolf);
+				return dist < 25;
 			});
 			for(a in nearbyAnimals){
-				var w = cast(a,Wolf);
-				w.walkTo(Player.worldx,Player.worldy);
+				if(Std.is(a,Wolf)){
+					var w = cast(a,Wolf);
+					w.walkTo(Player.worldx,Player.worldy);
+				} else if(Std.is(a,Squirrel)){
+					var s = cast(a,Squirrel);
+					s.fetchFood(Player.worldx,Player.worldy);
+				}
+				
 			}
 		}
-		FlxG.overlap(Player, GrpItems, playerTouchItem);
+		FlxG.overlap(Player, this.World.Items, playerTouchItem);
 	}
 
 	function placeEntity(entityName:String, entityData:Xml):Void
@@ -100,7 +105,7 @@ class PlayState extends FlxState
 		{
 			Player.Bag.GiveItem(I.ItemType, 1);
 			I.kill();
-			GrpItems.forEachDead(removeItemFromGrp);
+			this.World.Items.forEachDead(removeItemFromGrp);
 		}
 	}
 

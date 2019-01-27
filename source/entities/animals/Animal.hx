@@ -15,6 +15,8 @@ class Animal extends DynamicEntity
     public var scritchable = true;
     var state = IDLE;
     var world:World;
+    var destination:FlxPoint;
+    var callArrival:Bool;
 
     public function new(x:Int,y:Int,w:World){
         super(x,y);
@@ -85,8 +87,9 @@ class Animal extends DynamicEntity
         trace(currentPath);
     }
 
-    public function walkTo(x:Int,y:Int,?active:Bool=true){
+    public function walkTo(x:Int,y:Int,?active:Bool=true,?callArrival:Bool=false){
         state = active ? ACTIVE : IDLE;
+        this.callArrival = callArrival;
         currentPath = currentPath.filter(function(_){return false;});
         findPath(new FlxPoint(x,y));
     }
@@ -149,6 +152,10 @@ class Animal extends DynamicEntity
                 onComplete: function(_):Void {heart.destroy();}
             });
         }
+    }
+
+    public function onArrival(){
+
     }
 }
 

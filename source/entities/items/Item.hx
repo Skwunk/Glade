@@ -30,4 +30,5 @@ class Item extends StaticEntity
 enum ITEM_TYPE
 {
     STICK;
+    BERRY;
 }
