@@ -2,10 +2,14 @@ package entities.animals;
 
 import World;
 import flixel.util.FlxColor;
+import flixel.math.FlxPoint;
+import entities.scenery.*;
+import entities.items.Stick;
 
 class Beaver extends Animal
 {
     var lastHappinessUpdate:Float = 0;
+    var treeTarget:Trunk;
     public override function new(x:Int,y:Int,w:World)
     {
         super(x,y,w);
@@ -17,7 +21,6 @@ class Beaver extends Animal
     {
         super.update(elapsed);
         lastHappinessUpdate += elapsed;
-        trace(lastHappinessUpdate);
         if(lastHappinessUpdate > 1){
             lastHappinessUpdate = 0;
             updateHappiness();
@@ -36,12 +39,31 @@ class Beaver extends Animal
         happiness = Math.min(100,num_buildings*5);
     }
 
-    // public function fetchFood(x:Int,y:Int):Void
-    // {
-    //     walkTo(x,y,true,true);
-    // }
+    public function harvestTree():Bool
+    {
+        trace("Finding Tree");
+        var trees = world.getObjects().filter(function(o:Object){
+            return o.ObjectType == TREE;
+        });
 
-    // public override function onArrival(){
-    //     world.Items.add(new Berry(worldx,worldy));
-    // }
+        if(trees.length == 0) return false;
+
+        trees.sort(function(A:Object,B:Object){
+            var distA = Math.abs(A.worldx-worldx) + Math.abs(A.worldy-worldy);
+            var distB = Math.abs(B.worldx - worldx) + Math.abs(B.worldy - worldy);
+            return Std.int(distA - distB);
+        });
+
+        walkTo(trees[0].worldx, trees[0].worldy+1, true, true);
+
+        treeTarget = cast trees[0];
+
+        return true;
+    }
+
+    public override function onArrival(){
+        trace("Arrived at tree");
+        treeTarget.destroy();
+        world.Items.add(new Stick(worldx,worldy-1));
+    }
 }

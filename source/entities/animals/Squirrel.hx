@@ -1,7 +1,7 @@
 package entities.animals;
 
 import World;
-import entities.items.Berry;
+import entities.items.*;
 import flixel.util.FlxColor;
 import flixel.math.FlxPoint;
 import entities.scenery.Object;
@@ -31,6 +31,6 @@ class Squirrel extends Animal
     }
 
     public override function onArrival(){
-        world.Items.add(new Berry(worldx,worldy));
+        world.Items.add(new Acorn(worldx,worldy));
     }
 }

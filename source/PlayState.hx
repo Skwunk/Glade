@@ -136,6 +136,20 @@ class PlayState extends FlxState
 				}
 			}
 		}
+
+		if(FlxG.mouse.justPressedMiddle)
+		{
+			trace("Pressed Middle");
+			var mouseWorldPosX:Float = Std.int((FlxG.camera.x + FlxG.mouse.x)/64);
+			var mouseWorldPosY:Float = Std.int((FlxG.camera.y + FlxG.mouse.y)/64);
+			for(animal in animals)
+			{
+				if(Std.is(animal,Beaver)){
+					var b = cast(animal,Beaver);
+					b.harvestTree();
+				}
+			}
+		}
 	}
 
 	function placeEntity(entityName:String, entityData:Xml):Void
