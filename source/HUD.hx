@@ -62,19 +62,36 @@ class HUD extends FlxSpriteGroup
     {   
         if(FlxG.mouse.wheel != 0 || HUDPlayer.Bag.hasChanged == true)
         {
+            Items.destroy();
+            Items = new FlxSpriteGroup();
+            if(item1 != null)
+            {
+                item1.destroy();
+            }
+            if(item2 != null)
+            {
+                item2.destroy();
+            }
+            if(item3 != null)
+            {
+                item3.destroy();
+            }
+            if(item4 != null)
+            {
+                item4.destroy();
+            }
+            if(item5 != null)
+            {
+                item5.destroy();
+            }
             if(HUDPlayer.Bag.Order.length == 0 && Items != null)
             {
-                Items.destroy();
-                Items = new FlxSpriteGroup();
+                
             } else if (HUDPlayer.Bag.Order.length == 1) {
                 item1 = createItem(HUDPlayer.Bag.Order.first());
                 item1.x = ItemBar.x + 142;
                 item1.y = ItemBar.y + 6;
                 Items.add(item1);
-                if(item2 != null)
-                {
-                item2.destroy();
-                }
             } else if (HUDPlayer.Bag.Order.length == 2) {
                 scroll();
                 var item1type = HUDPlayer.Bag.Order.pop();
@@ -87,10 +104,6 @@ class HUD extends FlxSpriteGroup
                 item2.x = ItemBar.x + 210;
                 item2.y = ItemBar.y + 6;
                 Items.add(item2);
-                if(item3 != null)
-                {
-                    item3.destroy();
-                }
                 HUDPlayer.Bag.Order.add(item1type);
                 HUDPlayer.Bag.Order.add(item2type);
             } else if (HUDPlayer.Bag.Order.length == 3) {
@@ -110,10 +123,6 @@ class HUD extends FlxSpriteGroup
                 item3.x = ItemBar.x + 278;
                 item3.y = ItemBar.y + 6;
                 Items.add(item3);
-                if(item4 != null)
-                {
-                    item4.destroy();
-                }
                 HUDPlayer.Bag.Order.add(item1type);
                 HUDPlayer.Bag.Order.add(item2type);
                 HUDPlayer.Bag.Order.add(item3type);
@@ -139,10 +148,6 @@ class HUD extends FlxSpriteGroup
                 item4.x = ItemBar.x + 74;
                 item4.y = ItemBar.y +6;
                 Items.add(item4);
-                if(item4 != null)
-                {
-                    item4.destroy();
-                }
                 HUDPlayer.Bag.Order.add(item1type);
                 HUDPlayer.Bag.Order.add(item2type);
                 HUDPlayer.Bag.Order.add(item3type);
