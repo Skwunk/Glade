@@ -107,7 +107,16 @@ class PlayState extends FlxState
 						Player.Bag.RemoveItem(STICK, 1);
 					}
 				case ACORN:
-					1;
+					if(Player.Bag.HasItem(ACORN, 1) >= 1)
+					{
+						var buildx = Std.int((FlxG.camera.x + FlxG.mouse.x)/64);
+						var buildy = Std.int((FlxG.camera.y + FlxG.mouse.y)/64);
+						trace(buildx + "," + buildy);
+						var tree = new Trunk(buildx, buildy, World);
+						World.addObject(tree);
+						World.addObject(tree.makeLeaves());
+						Player.Bag.RemoveItem(ACORN, 1);
+					}
 				default:
 					1;
 			}
