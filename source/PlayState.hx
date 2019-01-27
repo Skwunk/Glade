@@ -34,13 +34,14 @@ class PlayState extends FlxState
 
 		animals = new FlxSpriteGroup();
 		add(animals);
-		var wolf = new Wolf(8,8);
+		var wolf = new Wolf(5,4, this.World);
 		animals.add(wolf);
+		var squirrel = new Squirrel(1,1,this.World);
+		animals.add(squirrel);
 
-		GrpItems = new FlxSpriteGroup();
-		add(GrpItems);
-		var stick = new Stick(6,6);
-		GrpItems.add(stick);
+		add(this.World.Items);
+		var stick = new Stick(5,2);
+		this.World.Items.add(stick);
 
 		Player = new Player(2, 2, this.World);
 		add(Player);
@@ -58,16 +59,33 @@ class PlayState extends FlxState
 	{
 		super.update(elapsed);
 		if(FlxG.keys.justPressed.SPACE){
-			var nearbyAnimals = animals.members.filter(function(s:FlxSprite):Bool{
+			var sameTileAnimals = animals.members.filter(function(s:FlxSprite):Bool{
 				var a = cast(s,Animal);
 				return (a.worldx == Player.worldx) && (a.worldy == Player.worldy);
 			});
-			for(a in nearbyAnimals){
+			for(a in sameTileAnimals){
 				var an = cast(a,Animal);
 				if(an.scritchable) an.scritch(this);
 			}
 		}
-		FlxG.overlap(Player, GrpItems, playerTouchItem);
+		if(FlxG.keys.justPressed.R){
+			var nearbyAnimals = animals.members.filter(function(s:FlxSprite):Bool{
+				var a = cast(s,Animal);
+				var dist = Math.abs(a.worldx - Player.worldx) + Math.abs(a.worldy - Player.worldy);
+				return dist < 25;
+			});
+			for(a in nearbyAnimals){
+				if(Std.is(a,Wolf)){
+					var w = cast(a,Wolf);
+					w.walkTo(Player.worldx,Player.worldy);
+				} else if(Std.is(a,Squirrel)){
+					var s = cast(a,Squirrel);
+					s.fetchFood(Player.worldx,Player.worldy);
+				}
+				
+			}
+		}
+		FlxG.overlap(Player, this.World.Items, playerTouchItem);
 	}
 
 	function placeEntity(entityName:String, entityData:Xml):Void
@@ -87,7 +105,7 @@ class PlayState extends FlxState
 		{
 			Player.Bag.GiveItem(I.ItemType, 1);
 			I.kill();
-			GrpItems.forEachDead(removeItemFromGrp);
+			this.World.Items.forEachDead(removeItemFromGrp);
 		}
 	}
 

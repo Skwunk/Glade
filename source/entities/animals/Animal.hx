@@ -5,6 +5,7 @@ import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import World;
 
 class Animal extends DynamicEntity
 {
@@ -12,6 +13,15 @@ class Animal extends DynamicEntity
     var walking = false;
     var happiness:Float = 0;
     public var scritchable = true;
+    var state = IDLE;
+    var world:World;
+    var destination:FlxPoint;
+    var callArrival:Bool;
+
+    public function new(x:Int,y:Int,w:World){
+        super(x,y);
+        world = w;
+    }
 
     private function dist(A:FlxPoint,Bx:Float,By:Float):Int
     {
@@ -31,7 +41,7 @@ class Animal extends DynamicEntity
         q = new Node(this.worldx,this.worldy,0,dist(dest,worldx,worldy));
         var p:Node;
 
-        while(((openNodes.length > 0 && steps < 100) || steps == 0 ) && !found){
+        while(((openNodes.length > 0 && steps < 30) || steps == 0 ) && !found){
             //find the node with the least f on the open list, call it "q"
             openNodes.sort(function(A:Node,B:Node):Int
             {
@@ -39,11 +49,13 @@ class Animal extends DynamicEntity
             });
             if(steps > 0) q = openNodes.pop();
             //Generate successors
-            var up = new Node(q.x,q.y-1,q.g+1,dist(dest,q.x,q.y-1));
-            var down = new Node(q.x,q.y+1,q.g+1,dist(dest,q.x,q.y+1));
-            var left = new Node(q.x-1,q.y,q.g+1,dist(dest,q.x-1,q.y));
-            var right = new Node(q.x+1,q.y,q.g+1,dist(dest,q.x+1,q.y));
-            for(p in [up,down,left,right]){
+            var blocked = world.getWalkableDirections(Std.int(q.x),Std.int(q.y));
+            var succ = new Array<Node>();
+            if(blocked & World.UP == 0)    succ.push(new Node(q.x,  q.y-1,q.g+1,dist(dest,q.x,  q.y-1)));
+            if(blocked & World.DOWN == 0)  succ.push(new Node(q.x,  q.y+1,q.g+1,dist(dest,q.x,  q.y+1)));
+            if(blocked & World.LEFT == 0)  succ.push(new Node(q.x-1,q.y,  q.g+1,dist(dest,q.x-1,q.y  )));
+            if(blocked & World.RIGHT == 0) succ.push(new Node(q.x+1,q.y,  q.g+1,dist(dest,q.x+1,q.y  )));
+            for(p in succ){
                 if(p.eq(dest)){
                     p.parent = q;
                     openNodes.push(p);
@@ -75,17 +87,20 @@ class Animal extends DynamicEntity
         trace(currentPath);
     }
 
-    public function walkTo(x:Int,y:Int){
-        if(currentPath.length == 0){
-            findPath(new FlxPoint(x,y));
-        }
+    public function walkTo(x:Int,y:Int,?active:Bool=true,?callArrival:Bool=false){
+        state = active ? ACTIVE : IDLE;
+        this.callArrival = callArrival;
+        currentPath = currentPath.filter(function(_){return false;});
+        findPath(new FlxPoint(x,y));
     }
 
     public override function update(elapsed:Float){
         super.update(elapsed);
         if(!walking && currentPath.length > 0){
             var nextPoint = currentPath.pop();
-            var newPos = Entity.toScreenPos(Std.int(nextPoint.x),Std.int(nextPoint.y));
+            worldx = Std.int(nextPoint.x);
+            worldy = Std.int(nextPoint.y);
+            var newPos = Entity.toScreenPos(worldx,worldy);
             walking = true;
             FlxTween.tween(this, {
                 x:newPos.x,
@@ -97,6 +112,24 @@ class Animal extends DynamicEntity
                     walking = false;
                 }
             });
+        } else {
+            if(state == ACTIVE){
+                state = IDLE;
+            } else {
+                var behaviour = Math.random();
+                if(behaviour < 0.001){
+                    if(state == IDLE){
+                        state = WANDERING;
+                    }
+                }
+                if(state == WANDERING && currentPath.length == 0 && !walking){
+                    // Do some random pathing
+                    trace("tried to path");
+                    var dx:Int = cast Math.round(Math.random())*5 - 2.5;
+                    var dy:Int = cast Math.round(Math.random())*5 - 2.5;
+                    walkTo(worldx+dx,worldy+dy);
+                }
+            }
         }
     }
 
@@ -120,6 +153,10 @@ class Animal extends DynamicEntity
             });
         }
     }
+
+    public function onArrival(){
+
+    }
 }
 
 private class Node extends FlxPoint
@@ -141,4 +178,10 @@ private class Node extends FlxPoint
     {
         return other.x == x && other.y == y;
     }
+}
+
+enum STATES{
+    IDLE;
+    ACTIVE;
+    WANDERING;
 }

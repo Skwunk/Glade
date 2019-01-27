@@ -21,6 +21,7 @@ class World extends FlxSpriteGroup
     private var Objects:Array<StaticEntity> = [];
 
     public var Foreground:FlxSpriteGroup;
+    public var Items:FlxSpriteGroup;
 
     static var UP = 8;
     static var DOWN = 4;
@@ -31,6 +32,7 @@ class World extends FlxSpriteGroup
     {
         super();
         Foreground = new FlxSpriteGroup();
+        Items = new FlxSpriteGroup();
         updateImage();
     }
 
