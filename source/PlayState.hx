@@ -41,6 +41,8 @@ class PlayState extends FlxState
 		var beaver = new Beaver(7,5,this.World);
 		animals.add(beaver);
 
+
+		GrpItems = new FlxSpriteGroup();
 		add(this.World.Items);
 		var stick = new Stick(5,2);
 		this.World.Items.add(stick);

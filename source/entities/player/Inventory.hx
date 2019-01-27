@@ -4,10 +4,12 @@ import entities.items.Item;
 
 class Inventory
 {
+	public var Order:List<ITEM_TYPE>;
 	public var Bag:Map<ITEM_TYPE, Int>;
 
 	public function new()
 	{
+		Order = new List<ITEM_TYPE>();
 		Bag = new Map<ITEM_TYPE, Int>();
 	}
 
@@ -19,6 +21,7 @@ class Inventory
 		}
 		else
 		{
+			Order.add(item);
 			Bag.set(item, number);
 		}
 		return true;
@@ -33,6 +36,7 @@ class Inventory
 
 		if(number < 0 || number >= Bag.get(item))
 		{
+			Order.remove(item);
 			Bag.remove(item);
 		}
 		else
