@@ -39,6 +39,8 @@ class PlayState extends FlxState
 		var squirrel = new Squirrel(1,1,this.World);
 		animals.add(squirrel);
 
+
+		GrpItems = new FlxSpriteGroup();
 		add(this.World.Items);
 		var stick = new Stick(5,2);
 		this.World.Items.add(stick);
