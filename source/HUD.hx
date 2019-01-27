@@ -249,27 +249,4 @@ class HUD extends FlxSpriteGroup
         return item;
     }
 
-    public function createAnimalBar(animal:Animal):Void
-    {
-        trace(animal.happiness);
-        var bar:FlxBar = new FlxBar(0, animal.y - 6, LEFT_TO_RIGHT, 64, 5, animal, "happiness", 0, 100);
-        bar.x = animal.x + animal.width/2 - bar.width/2;
-        bar.createFilledBar(0xFF63460C, 0xFFE6AA2F);
-        if (AnimalBars.exists(animal)) 
-        {
-           remove(AnimalBars.get(animal));
-        }
-        AnimalBars.set(animal, bar);
-        add(bar);
-    }
-
-    public function removeAnimalBar(animal:Animal):Void
-    {
-        if (AnimalBars.exists(animal)) 
-        {
-           remove(AnimalBars.get(animal));
-        }
-        AnimalBars.remove(animal);
-    }
-
 }
