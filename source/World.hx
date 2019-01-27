@@ -63,6 +63,11 @@ class World extends FlxSpriteGroup
             out = 15;
         }
         
+        if(getObject(x, y) != null && !getObject(x, y).passable)
+        {
+            return 15;
+        }
+
         if(reverse)
         {
             out = ((out & 5) << 1) | ((out & 10) >> 1);
@@ -150,7 +155,6 @@ class World extends FlxSpriteGroup
     {
         if(getObject(object.worldx, object.worldy) != null)
         {
-            trace("no add");
             return false;
         }
 
@@ -158,12 +162,10 @@ class World extends FlxSpriteGroup
         
         if(object.background)
         {
-            trace("backadd");
             add(object);
         }
         else
         {
-            trace("foreadd");
             Foreground.add(object);
         }
         
