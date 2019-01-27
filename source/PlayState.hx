@@ -93,12 +93,9 @@ class PlayState extends FlxState
 
 		if(FlxG.mouse.justPressed){
 			// Check player has material
-			trace("You clicked");
 			if(true){
-				trace("Has stuff");
 				var buildx = Std.int((FlxG.camera.x + FlxG.mouse.x)/64);
 				var buildy = Std.int((FlxG.camera.y + FlxG.mouse.y)/64);
-				trace(buildx + "," + buildy);
 				World.setTile(buildx, buildy, 2);
 				World.updateImage();
 			}
@@ -124,6 +121,20 @@ class PlayState extends FlxState
 				if((cast animal).worldx == mouseWorldPosX && (cast animal).worldy == mouseWorldPosY)
 				{
 					HUD.createAnimalBar(cast animal);
+				}
+			}
+		}
+
+		if(FlxG.mouse.justPressedMiddle)
+		{
+			trace("Pressed Middle");
+			var mouseWorldPosX:Float = Std.int((FlxG.camera.x + FlxG.mouse.x)/64);
+			var mouseWorldPosY:Float = Std.int((FlxG.camera.y + FlxG.mouse.y)/64);
+			for(animal in animals)
+			{
+				if(Std.is(animal,Beaver)){
+					var b = cast(animal,Beaver);
+					b.harvestTree();
 				}
 			}
 		}
