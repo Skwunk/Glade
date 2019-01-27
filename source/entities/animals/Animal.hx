@@ -11,7 +11,7 @@ class Animal extends DynamicEntity
 {
     var currentPath = new Array<FlxPoint>();
     var walking = false;
-    var happiness:Float = 0;
+    public var happiness:Float = 0;
     public var scritchable = true;
     var state = IDLE;
     var world:World;

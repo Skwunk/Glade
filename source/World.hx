@@ -11,6 +11,7 @@ import flixel.addons.editors.tiled.TiledObjectLayer;
 import flixel.util.FlxColor;
 import flixel.FlxSprite;
 import entities.StaticEntity;
+import entities.scenery.Object;
 
 class World extends FlxSpriteGroup
 {
@@ -155,7 +156,7 @@ class World extends FlxSpriteGroup
         return null;
     }
 
-    public function addObject(object:StaticEntity):Bool
+    public function addObject(object:Object):Bool
     {
         if(getObject(object.worldx, object.worldy) != null)
         {
@@ -176,7 +177,7 @@ class World extends FlxSpriteGroup
         return true;
     }
 
-    public function removeObject(object:StaticEntity):Void
+    public function removeObject(object:Object):Void
     {
         Objects.remove(object);
         remove(object);

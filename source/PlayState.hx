@@ -86,6 +86,21 @@ class PlayState extends FlxState
 			}
 		}
 		FlxG.overlap(Player, this.World.Items, playerTouchItem);
+
+		//handle animal ui interatcion
+		if(FlxG.mouse.justPressedRight)
+		{
+			var mouseWorldPosX:Float = Std.int((FlxG.camera.x + FlxG.mouse.x)/64);
+			var mouseWorldPosY:Float = Std.int((FlxG.camera.y + FlxG.mouse.y)/64);
+			for(animal in animals)
+			{
+				HUD.removeAnimalBar(cast animal);
+				if((cast animal).worldx == mouseWorldPosX && (cast animal).worldy == mouseWorldPosY)
+				{
+					HUD.createAnimalBar(cast animal);
+				}
+			}
+		}
 	}
 
 	function placeEntity(entityName:String, entityData:Xml):Void
