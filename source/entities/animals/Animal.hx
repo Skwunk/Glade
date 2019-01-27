@@ -11,7 +11,7 @@ class Animal extends DynamicEntity
 {
     var currentPath = new Array<FlxPoint>();
     var walking = false;
-    var happiness:Float = 0;
+    public var happiness:Float = 0;
     public var scritchable = true;
     var state = IDLE;
     var world:World;
@@ -136,9 +136,10 @@ class Animal extends DynamicEntity
     public function scritch(scene:FlxState)
     {
         var delta_h = Math.random()*15 + 5;
-        if(happiness + delta_h > 80){
-            delta_h = Math.max(0,80-happiness);
+        if(happiness + delta_h > 100){
+            delta_h = Math.max(0,100-happiness);
         }
+        happiness += delta_h;
         var num_hearts = Std.int(delta_h/6)+1;
         for(i in 0...num_hearts)
         {

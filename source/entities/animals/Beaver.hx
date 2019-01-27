@@ -2,12 +2,10 @@ package entities.animals;
 
 import World;
 import flixel.util.FlxColor;
-import flixel.math.FlxPoint;
-import entities.scenery.Object;
-import entities.scenery.Trunk;
 
-class Squirrel extends Animal
+class Beaver extends Animal
 {
+    var lastHappinessUpdate:Float = 0;
     public override function new(x:Int,y:Int,w:World)
     {
         super(x,y,w);
@@ -18,22 +16,32 @@ class Squirrel extends Animal
     public override function update(elapsed:Float)
     {
         super.update(elapsed);
-        var num_built = world.getObjects().filter(function(o:Object){
-            return o.ObjectType == TREE;
-        }).length;
-        happiness = num_trees * 5;
+        lastHappinessUpdate += elapsed;
+        trace(lastHappinessUpdate);
+        if(lastHappinessUpdate > 1){
+            lastHappinessUpdate = 0;
+            updateHappiness();
+        }
     }
 
     public function updateHappiness(){
-        
+        var num_buildings = 0;
+        for(x in 0...world.MapWidth){
+            for(y in 0...world.MapHeight){
+                if(World.isBuiltTile[world.getTile(x,y)]){
+                    num_buildings++;
+                }
+            }
+        }
+        happiness = Math.min(100,num_buildings*5);
     }
 
-    public function fetchFood(x:Int,y:Int):Void
-    {
-        walkTo(x,y,true,true);
-    }
+    // public function fetchFood(x:Int,y:Int):Void
+    // {
+    //     walkTo(x,y,true,true);
+    // }
 
-    public override function onArrival(){
-        world.Items.add(new Berry(worldx,worldy));
-    }
+    // public override function onArrival(){
+    //     world.Items.add(new Berry(worldx,worldy));
+    // }
 }

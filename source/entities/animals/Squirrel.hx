@@ -22,7 +22,7 @@ class Squirrel extends Animal
         var num_trees = world.getObjects().filter(function(o:Object){
             return o.ObjectType == TREE;
         }).length;
-        happiness = num_trees * 5;
+        happiness = Math.min(num_trees * 5,100);
     }
 
     public function fetchFood(x:Int,y:Int):Void
