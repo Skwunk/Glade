@@ -33,16 +33,13 @@ class Player extends DynamicEntity
             if (FlxG.keys.pressed.LEFT && (blocked & World.LEFT) == 0){
                 worldx--;
                 walking = true;
-            }
-            if (FlxG.keys.pressed.RIGHT && (blocked & World.RIGHT) == 0){
+            } else if (FlxG.keys.pressed.RIGHT && (blocked & World.RIGHT) == 0){
                 worldx++;
                 walking = true;
-            }
-            if (FlxG.keys.pressed.UP && (blocked & World.UP) == 0){
+            } else if (FlxG.keys.pressed.UP && (blocked & World.UP) == 0){
                 worldy--;
                 walking = true;
-            }
-            if (FlxG.keys.pressed.DOWN && (blocked & World.DOWN) == 0){
+            } else if (FlxG.keys.pressed.DOWN && (blocked & World.DOWN) == 0){
                 worldy++;
                 walking = true;
             }
