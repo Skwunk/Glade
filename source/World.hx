@@ -76,7 +76,7 @@ class World extends FlxSpriteGroup
 
 
         var out:Int = 0;
-        if(Tiles[y][x] == 1)
+        if(Tiles[y][x] > 0)
         {
             out = 15;
         }

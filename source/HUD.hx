@@ -47,12 +47,13 @@ class HUD extends FlxSpriteGroup
         ItemBar.loadGraphic(AssetPaths.ItemBar__png, false, 348, 76);
         ItemBar.x = Math.floor(FlxG.width/2 - ItemBar.width/2);
         ItemBar.y = Math.floor(FlxG.height - ItemBar.height - 8);
+        ItemBar.scrollFactor.set(0, 0);
         add(ItemBar);
     }
 
     override public function update(elapsed:Float)
     {
-        if(HUDPlayer.Bag.Order.length == 0 && Items != null)
+        /*if(HUDPlayer.Bag.Order.length == 0 && Items != null)
         {
             Items.destroy();
         } else if (HUDPlayer.Bag.Order.length == 1) {
@@ -155,7 +156,7 @@ class HUD extends FlxSpriteGroup
             HUDPlayer.Bag.Order.add(item5type);
             HUDPlayer.Bag.Order.add(item4type);
             
-        }
+        }*/
         super.update(elapsed);
     }
 
