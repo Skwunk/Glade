@@ -96,6 +96,10 @@ class Animal extends DynamicEntity
         super.update(elapsed);
         if(!walking && currentPath.length > 0){
             var nextPoint = currentPath.pop();
+            if(currentPath.length == 0 && callArrival){
+                callArrival = false;
+                onArrival();
+            } 
             worldx = Std.int(nextPoint.x);
             worldy = Std.int(nextPoint.y);
             var newPos = Entity.toScreenPos(worldx,worldy);

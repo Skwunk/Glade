@@ -31,4 +31,5 @@ enum ITEM_TYPE
 {
     STICK;
     BERRY;
+    ACORN;
 }

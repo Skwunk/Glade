@@ -1,8 +1,8 @@
 package;
 
 import entities.player.Player;
-import entities.items.Item;
 import entities.items.*;
+import entities.items.Item;
 import flixel.group.FlxSpriteGroup;
 import flixel.FlxSprite;
 import flixel.ui.FlxBar;
@@ -212,6 +212,10 @@ class HUD extends FlxSpriteGroup
         if(itemType == ITEM_TYPE.BERRY)
         {
             item = new Berry();
+        }
+        if(itemType == ITEM_TYPE.ACORN)
+        {
+            item = new Acorn();
         }
         item.alive = false;
         return item;
