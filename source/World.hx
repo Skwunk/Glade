@@ -10,12 +10,20 @@ import flixel.addons.editors.tiled.TiledTileLayer;
 import flixel.addons.editors.tiled.TiledObjectLayer;
 import flixel.util.FlxColor;
 import flixel.FlxSprite;
+import entities.StaticEntity;
 
 class World extends FlxSpriteGroup
 {
     private var TileWidth:Int = 64;
     private var TileHeight:Int = 64; 
-    private var Tiles:Array<Array<Int>> = [[1, 1, 1, 1, 1, 1],[1, 0, 0, 1, 0, 0, 1],[1, 0, 0, 0, 0, 0, 1],[1, 0, 0, 1, 0, 0, 1],[1, 0, 0, 1, 0, 0, 1],[1, 1, 1, 1, 1, 1]];
+    private var Tiles:Array<Array<Int>> = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
+
+    private var Objects:Array<Object> = [];
+
+    public var Foreground:FlxSpriteGroup;
+    public var Items:FlxSpriteGroup;
+    public var MapWidth = 16;
+    public var MapHeight = 16;
 
     static var UP = 8;
     static var DOWN = 4;
@@ -25,6 +33,8 @@ class World extends FlxSpriteGroup
     public function new()
     {
         super();
+        Foreground = new FlxSpriteGroup();
+        Items = new FlxSpriteGroup();
         updateImage();
     }
 
@@ -57,6 +67,11 @@ class World extends FlxSpriteGroup
             out = 15;
         }
         
+        if(getObject(x, y) != null && !getObject(x, y).passable)
+        {
+            return 15;
+        }
+
         if(reverse)
         {
             out = ((out & 5) << 1) | ((out & 10) >> 1);
@@ -123,4 +138,67 @@ class World extends FlxSpriteGroup
         return true;
     }
 
+    public function getTile(x:Int, y:Int):Int
+    {
+        return Tiles[y][x];
+    }
+
+    public function getObject(x:Int, y:Int):StaticEntity
+    {
+        for(object in Objects)
+        {
+            if(object.worldx == x && object.worldy == y)
+            {
+                return object;
+            }
+        }
+        return null;
+    }
+
+    public function addObject(object:StaticEntity):Bool
+    {
+        if(getObject(object.worldx, object.worldy) != null)
+        {
+            return false;
+        }
+
+        Objects.push(object);
+        
+        if(object.background)
+        {
+            add(object);
+        }
+        else
+        {
+            Foreground.add(object);
+        }
+        
+        return true;
+    }
+
+    public function removeObject(object:StaticEntity):Void
+    {
+        Objects.remove(object);
+        remove(object);
+        Foreground.remove(object);
+    }
+
+    public function setTile(x:Int, y:Int, tile:Int):Bool
+    {
+        if(!legal(x, y))
+        {
+            return false;
+        }
+
+        Tiles[y][x] = tile;
+
+        updateImage();
+
+        return true;
+    }
+
+    public function getObjects():Array<Object>
+    {
+        return Objects;
+    }
 }

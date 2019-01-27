@@ -4,6 +4,7 @@ import flixel.FlxState;
 import entities.items.*;
 import entities.player.Player;
 import entities.animals.*;
+import entities.scenery.*;
 import flixel.group.FlxSpriteGroup;
 import flixel.FlxG;
 import cutscene.CutsceneState;
@@ -13,11 +14,11 @@ import flixel.FlxSprite;
 class PlayState extends FlxState
 {
 
-
 	var World:World;
 	var HUD:HUD;
 	var Player:Player;
 	var animals:FlxSpriteGroup;
+	var scenery:FlxSpriteGroup;
 	var GrpItems:FlxSpriteGroup;
 
 	override public function create():Void
@@ -25,19 +26,30 @@ class PlayState extends FlxState
 		this.World = new World();
 		add(World);
 
+		var tree = new Trunk(1,4, World);
+		var leaves = tree.makeLeaves();
+		trace("start add");
+		World.addObject(tree);
+		World.addObject(leaves);
+
 		animals = new FlxSpriteGroup();
 		add(animals);
-		var wolf = new Wolf(8,8);
+		var wolf = new Wolf(5,4, this.World);
 		animals.add(wolf);
+		var squirrel = new Squirrel(1,1,this.World);
+		animals.add(squirrel);
+
 
 		GrpItems = new FlxSpriteGroup();
-		add(GrpItems);
-		var stick = new Stick(3, 2);
-		GrpItems.add(stick);
+		add(this.World.Items);
+		var stick = new Stick(5,2);
+		this.World.Items.add(stick);
 
 		Player = new Player(2, 2, this.World);
 		add(Player);
 		FlxG.camera.follow(Player, TOPDOWN, 1);
+
+		add(World.Foreground);
 
 		HUD = new HUD(Player);
 		add(HUD);
@@ -49,16 +61,33 @@ class PlayState extends FlxState
 	{
 		super.update(elapsed);
 		if(FlxG.keys.justPressed.SPACE){
-			var nearbyAnimals = animals.members.filter(function(s:FlxSprite):Bool{
+			var sameTileAnimals = animals.members.filter(function(s:FlxSprite):Bool{
 				var a = cast(s,Animal);
 				return (a.worldx == Player.worldx) && (a.worldy == Player.worldy);
 			});
-			for(a in nearbyAnimals){
+			for(a in sameTileAnimals){
 				var an = cast(a,Animal);
 				if(an.scritchable) an.scritch(this);
 			}
 		}
-		FlxG.overlap(Player, GrpItems, playerTouchItem);
+		if(FlxG.keys.justPressed.R){
+			var nearbyAnimals = animals.members.filter(function(s:FlxSprite):Bool{
+				var a = cast(s,Animal);
+				var dist = Math.abs(a.worldx - Player.worldx) + Math.abs(a.worldy - Player.worldy);
+				return dist < 25;
+			});
+			for(a in nearbyAnimals){
+				if(Std.is(a,Wolf)){
+					var w = cast(a,Wolf);
+					w.walkTo(Player.worldx,Player.worldy);
+				} else if(Std.is(a,Squirrel)){
+					var s = cast(a,Squirrel);
+					s.fetchFood(Player.worldx,Player.worldy);
+				}
+				
+			}
+		}
+		FlxG.overlap(Player, this.World.Items, playerTouchItem);
 	}
 
 	function placeEntity(entityName:String, entityData:Xml):Void
@@ -78,7 +107,7 @@ class PlayState extends FlxState
 		{
 			Player.Bag.GiveItem(I.ItemType, 1);
 			I.kill();
-			GrpItems.forEachDead(removeItemFromGrp);
+			this.World.Items.forEachDead(removeItemFromGrp);
 		}
 	}
 
