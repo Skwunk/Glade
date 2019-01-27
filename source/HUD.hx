@@ -53,7 +53,7 @@ class HUD extends FlxSpriteGroup
 
     override public function update(elapsed:Float)
     {
-        /*if(HUDPlayer.Bag.Order.length == 0 && Items != null)
+        if(HUDPlayer.Bag.Order.length == 0 && Items != null)
         {
             Items.destroy();
         } else if (HUDPlayer.Bag.Order.length == 1) {
@@ -156,7 +156,7 @@ class HUD extends FlxSpriteGroup
             HUDPlayer.Bag.Order.add(item5type);
             HUDPlayer.Bag.Order.add(item4type);
             
-        }*/
+        }
         super.update(elapsed);
     }
 
