@@ -21,6 +21,7 @@ class Trunk extends StaticEntity
     {
         world.removeObject(leaves);
         leaves.destroy();
+        world.removeObject(this);
         super();
     }
 }

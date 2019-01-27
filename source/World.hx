@@ -10,12 +10,15 @@ import flixel.addons.editors.tiled.TiledTileLayer;
 import flixel.addons.editors.tiled.TiledObjectLayer;
 import flixel.util.FlxColor;
 import flixel.FlxSprite;
+import entities.StaticEntity;
 
 class World extends FlxSpriteGroup
 {
     private var TileWidth:Int = 64;
     private var TileHeight:Int = 64; 
     private var Tiles:Array<Array<Int>> = [[1, 1, 1, 1, 1, 1],[1, 0, 0, 1, 0, 0, 1],[1, 0, 0, 0, 0, 0, 1],[1, 0, 0, 1, 0, 0, 1],[1, 0, 0, 1, 0, 0, 1],[1, 1, 1, 1, 1, 1]];
+
+    private var Objects:Array<StaticEntity> = [];
 
     static var UP = 8;
     static var DOWN = 4;
@@ -123,4 +126,49 @@ class World extends FlxSpriteGroup
         return true;
     }
 
+    public function getTile(x:Int, y:Int):Int
+    {
+        return Tiles[y][x];
+    }
+
+    public function getObject(x:Int, y:Int):StaticEntity
+    {
+        for(object in Objects)
+        {
+            if(object.worldx == x && object.worldy == y)
+            {
+                return object;
+            }
+        }
+        return null;
+    }
+
+    public function addObject(object:StaticEntity):Bool
+    {
+        if(getObject != null)
+        {
+            return false;
+        }
+
+        Objects.push(object);
+        add(object);
+        return true;
+    }
+
+    public function removeObject(object:StaticEntity):Void
+    {
+        Objects.remove(object);
+        remove(object);
+    }
+
+    public function setTile(x:Int, y:Int, tile:Int):Bool
+    {
+        if(!legal(x, y))
+        {
+            return false;
+        }
+
+        Tiles[y][x] = tile;
+        return true;
+    }
 }

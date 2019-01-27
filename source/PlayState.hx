@@ -1,9 +1,10 @@
 package;
 
 import flixel.FlxState;
-import entities.items.Item;
+import entities.items.*;
 import entities.player.Player;
 import entities.animals.*;
+import entities.scenery.*;
 import flixel.group.FlxSpriteGroup;
 import flixel.FlxG;
 import cutscene.CutsceneState;
@@ -12,7 +13,6 @@ import flixel.FlxSprite;
 
 class PlayState extends FlxState
 {
-
 
 	var World:World;
 	var HUD:HUD;
@@ -26,16 +26,23 @@ class PlayState extends FlxState
 		this.World = new World();
 		add(World);
 
+		treeTrunks = new FlxSpriteGroup();
+		treeLeaves = new FlxSpriteGroup();
+		var tree = new Trunk(1,4);
+		var leaves = tree.makeLeaves();
+
 		animals = new FlxSpriteGroup();
 		add(animals);
 		var wolf = new Wolf(8,8);
 		animals.add(wolf);
 
-		GrpItems = new FlxTypedGroup();
+		GrpItems = new FlxSpriteGroup();
+		add(GrpItems);
+		var stick = new Stick(6,6);
+		GrpItems.add(stick);
 
 		Player = new Player(2, 2, this.World);
 		add(Player);
-
 		FlxG.camera.follow(Player, TOPDOWN, 1);
 
 		HUD = new HUD(Player);
@@ -57,6 +64,7 @@ class PlayState extends FlxState
 				if(an.scritchable) an.scritch(this);
 			}
 		}
+		FlxG.overlap(Player, GrpItems, playerTouchItem);
 	}
 
 	function placeEntity(entityName:String, entityData:Xml):Void
@@ -74,8 +82,15 @@ class PlayState extends FlxState
 	{
 		if(P.alive && P.exists && I.alive && I.exists)
 		{
+			Player.Bag.GiveItem(I.ItemType, 1);
 			I.kill();
+			GrpItems.forEachDead(removeItemFromGrp);
 		}
+	}
+
+	function removeItemFromGrp(i:FlxSprite)
+	{
+		i.destroy();
 	}
 
 	public function getPlayer():Player
