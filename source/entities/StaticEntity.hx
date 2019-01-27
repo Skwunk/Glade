@@ -2,6 +2,7 @@ package entities;
 
 class StaticEntity extends Entity
 {
+    public var passable:Bool = true;
 
     public function new(?x:Int=0, ?y:Int=0)
     {

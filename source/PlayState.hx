@@ -18,6 +18,7 @@ class PlayState extends FlxState
 	var HUD:HUD;
 	var Player:Player;
 	var animals:FlxSpriteGroup;
+	var scenery:FlxSpriteGroup;
 	var GrpItems:FlxTypedGroup<Item>;
 
 	override public function create():Void
