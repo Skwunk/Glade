@@ -12,7 +12,7 @@ class Trunk extends Object
     public function new(?x:Int=0, ?y:Int=0, w:World)
     {
         super(x,y);
-        makeGraphic(64,64,FlxColor.BROWN);
+        loadGraphic(AssetPaths.Tree__png, false, 64, 64);
         world = w;
         passable = false;
         ObjectType = TREE;

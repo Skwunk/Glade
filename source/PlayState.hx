@@ -102,17 +102,20 @@ class PlayState extends FlxState
 
 		if(FlxG.mouse.justPressed){
 			// Check player has material
-			trace("You clicked");
-			switch(Player.Bag.Order.first())
-			{
-				case STICK:
-					if(Player.Bag.HasItem(STICK, 1) >= 1){
-						trace("Has stuff");
-						var buildx = Std.int((FlxG.camera.x + FlxG.mouse.x)/64);
-						var buildy = Std.int((FlxG.camera.y + FlxG.mouse.y)/64);
-						trace(buildx + "," + buildy);
-						World.setTile(buildx, buildy, 2);
-						Player.Bag.RemoveItem(STICK, 1);
+			if(Player.Bag.HasItem(STICK, 1) >= 1){
+				var buildx = Std.int((FlxG.camera.x + FlxG.mouse.x)/64);
+				var buildy = Std.int((FlxG.camera.y + FlxG.mouse.y)/64);
+				if(World.getTile(buildx,buildy) == 0)
+				{
+					World.setTile(buildx, buildy, 2);
+					Player.Bag.RemoveItem(STICK, 1);
+					switch(Player.Bag.Order.first())
+					{
+						case STICK:
+						case ACORN:
+							1;
+						default:
+							1;
 					}
 				case ACORN:
 					if(Player.Bag.HasItem(ACORN, 1) >= 1)
@@ -127,7 +130,9 @@ class PlayState extends FlxState
 					}
 				default:
 					1;
+				}
 			}
+				
 		}
 
 		var happiness:Float = 0;

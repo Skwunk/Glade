@@ -8,7 +8,7 @@ import flixel.util.FlxColor;
      public function new(?x:Int=0, ?y:Int=0)
      {
         super(x,y);
-        makeGraphic(20,20,FlxColor.BROWN);
+        loadGraphic(AssetPaths.Acorn__png, false, 16, 16);
         ItemType = ACORN;
      }
      
