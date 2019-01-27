@@ -20,6 +20,8 @@ class World extends FlxSpriteGroup
 
     private var Objects:Array<StaticEntity> = [];
 
+    public var Foreground:FlxSpriteGroup;
+
     static var UP = 8;
     static var DOWN = 4;
     static var LEFT = 2;
@@ -28,6 +30,7 @@ class World extends FlxSpriteGroup
     public function new()
     {
         super();
+        Foreground = new FlxSpriteGroup();
         updateImage();
     }
 
@@ -145,13 +148,25 @@ class World extends FlxSpriteGroup
 
     public function addObject(object:StaticEntity):Bool
     {
-        if(getObject != null)
+        if(getObject(object.worldx, object.worldy) != null)
         {
+            trace("no add");
             return false;
         }
 
         Objects.push(object);
-        add(object);
+        
+        if(object.background)
+        {
+            trace("backadd");
+            add(object);
+        }
+        else
+        {
+            trace("foreadd");
+            Foreground.add(object);
+        }
+        
         return true;
     }
 
@@ -159,6 +174,7 @@ class World extends FlxSpriteGroup
     {
         Objects.remove(object);
         remove(object);
+        Foreground.remove(object);
     }
 
     public function setTile(x:Int, y:Int, tile:Int):Bool

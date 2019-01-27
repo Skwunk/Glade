@@ -19,17 +19,18 @@ class PlayState extends FlxState
 	var Player:Player;
 	var animals:FlxSpriteGroup;
 	var scenery:FlxSpriteGroup;
-	var GrpItems:FlxTypedGroup<Item>;
+	var GrpItems:FlxSpriteGroup;
 
 	override public function create():Void
 	{
 		this.World = new World();
 		add(World);
 
-		treeTrunks = new FlxSpriteGroup();
-		treeLeaves = new FlxSpriteGroup();
-		var tree = new Trunk(1,4);
+		var tree = new Trunk(1,4, World);
 		var leaves = tree.makeLeaves();
+		trace("start add");
+		World.addObject(tree);
+		World.addObject(leaves);
 
 		animals = new FlxSpriteGroup();
 		add(animals);
@@ -44,6 +45,8 @@ class PlayState extends FlxState
 		Player = new Player(2, 2, this.World);
 		add(Player);
 		FlxG.camera.follow(Player, TOPDOWN, 1);
+
+		add(World.Foreground);
 
 		HUD = new HUD(Player);
 		add(HUD);

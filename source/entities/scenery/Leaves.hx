@@ -9,5 +9,6 @@ class Leaves extends StaticEntity
     {
         super(x,y);
         makeGraphic(64,64,FlxColor.GREEN);
+        background = false;
     }
 }
