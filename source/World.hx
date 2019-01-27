@@ -23,6 +23,8 @@ class World extends FlxSpriteGroup
 
     public var Foreground:FlxSpriteGroup;
     public var Items:FlxSpriteGroup;
+    public var MapWidth = 16;
+    public var MapHeight = 16;
 
     static var UP = 8;
     static var DOWN = 4;
