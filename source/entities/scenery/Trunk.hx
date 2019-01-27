@@ -2,8 +2,9 @@ package entities.scenery;
 
 import flixel.util.FlxColor;
 import flixel.math.FlxPoint;
+import entities.scenery.Object;
 
-class Trunk extends StaticEntity
+class Trunk extends Object
 {
     private var leaves:Leaves;
     private var world:World;
@@ -14,6 +15,7 @@ class Trunk extends StaticEntity
         makeGraphic(64,64,FlxColor.BROWN);
         world = w;
         passable = false;
+        ObjectType = TREE;
     }
 
     public function makeLeaves():Leaves

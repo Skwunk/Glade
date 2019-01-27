@@ -18,7 +18,7 @@ class World extends FlxSpriteGroup
     private var TileHeight:Int = 64; 
     private var Tiles:Array<Array<Int>> = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
 
-    private var Objects:Array<StaticEntity> = [];
+    private var Objects:Array<Object> = [];
 
     public var Foreground:FlxSpriteGroup;
     public var Items:FlxSpriteGroup;
@@ -189,6 +189,14 @@ class World extends FlxSpriteGroup
         }
 
         Tiles[y][x] = tile;
+
+        updateImage();
+
         return true;
+    }
+
+    public function getObjects():Array<Object>
+    {
+        return Objects;
     }
 }
